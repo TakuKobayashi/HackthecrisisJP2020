@@ -46,3 +46,10 @@ functions:
     events:
       - http: ANY /
       - http: ANY /{proxy+}
+
+  scheduleApp:
+    handler: src/schedule.handler
+    memorySize: 128
+    timeout: 900
+    events:
+      - schedule: rate(1 minute)
