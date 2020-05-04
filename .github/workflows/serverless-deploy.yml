@@ -1,29 +1,53 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
-
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
+name: Serverless Deploy
 jobs:
-  build:
-
+  deploy:
+    name: deploy
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
-
+        node-version: [12.x]
     steps:
     - uses: actions/checkout@v2
+    - name: setup ubuntu
+      run: sudo apt-get --quiet update --yes
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - name: Register .env
+      working-directory: ./serverless
+      env:
+        LINE_NOTIFY_CLIENT_ID: ${{ secrets.LINE_NOTIFY_CLIENT_ID }}
+        LINE_NOTIFY_CLIENT_SECRET: ${{ secrets.LINE_NOTIFY_CLIENT_SECRET }}
+        FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+        FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+        FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+        LINE_NOTIFY_REDIRECT_URL: ${{ secrets.LINE_NOTIFY_REDIRECT_URL }}
+      run: |
+        echo "LINE_NOTIFY_CLIENT_ID=${LINE_NOTIFY_CLIENT_ID}" >> ./.env
+        echo "LINE_NOTIFY_CLIENT_SECRET=${LINE_NOTIFY_CLIENT_SECRET}" >> ./.env
+        echo "FIREBASE_API_KEY=${FIREBASE_API_KEY}" >> ./.env
+        echo "FIREBASE_AUTH_DOMAIN=${FIREBASE_AUTH_DOMAIN}" >> ./.env
+        echo "FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}" >> ./.env
+        echo "LINE_NOTIFY_REDIRECT_URL=${LINE_NOTIFY_REDIRECT_URL}" >> ./.env
+    - name: yarn install
+      working-directory: ./serverless
+      run: yarn install
+    - name: serverless package and deploy
+      working-directory: ./serverless
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        yarn run serverless package --package ./build
+        yarn run serverless config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
+        yarn run serverless deploy --stage production --package ./build
+    - uses: actions/upload-artifact@master
+      with:
+        name: build
+        path: serverless/build
