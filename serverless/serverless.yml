@@ -52,4 +52,4 @@ functions:
     memorySize: 128
     timeout: 900
     events:
-      - schedule: rate(1 minute)
+      - schedule: cron(0 */1 * * ? *)
