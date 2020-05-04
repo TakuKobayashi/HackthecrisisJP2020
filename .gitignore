@@ -7,3 +7,20 @@ jspm_packages
 
 # Webpack directories
 .webpack
+
+# IDE / Editor
+.idea
+
+# Logs
+/logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Nuxt generate
+# 静的ページの生成結果
+dist
