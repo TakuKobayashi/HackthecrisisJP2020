@@ -27,6 +27,7 @@
 <script lang="ts">
 import { Prop, Component, Vue } from 'vue-property-decorator';
 import { NuxtError } from '@nuxt/types';
+
 @Component({
   layout: 'empty',
   head(this: Error): object {

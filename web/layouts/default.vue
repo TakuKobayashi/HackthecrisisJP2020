@@ -1,93 +1,68 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-    </v-app-bar>
-    <v-content>
-      <v-container>
+  <v-app>
+    <header>
+      <Header />
+    </header>
+    <v-content class="content">
+      <v-container class="layout-container" fluid>
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <footer>
+      <Footer />
+    </footer>
   </v-app>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import Header from '~/components/layout/header.vue'
+import Footer from '~/components/layout/footer.vue'
+
+@Component({
+  components: {
+    Header,
+    Footer
+  }
+})
+export default class Default extends Vue {}
+</script>
+
+<style scoped>
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 62.5%;
+  color: #2c2c2b;
+}
+.layout-container {
+  padding: 0;
+  width: 100%;
+}
+header {
+  z-index: 999;
+  font-size: 62.5%;
+}
+footer {
+  font-size: 62.5%;
+}
+.wrapper {
+  padding-top: 56px;
+}
+@media screen and (max-width: 599px) {
+  .content {
+    margin: 0 auto;
   }
 }
-</script>
+@media screen and (max-width: 959px) {
+  .wrapper {
+    padding-top: 40px;
+  }
+}
+* :not(.v-icon) {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Yu Gothic',
+    YuGothic, Verdana, Meiryo, sans-serif;
+}
+</style>
