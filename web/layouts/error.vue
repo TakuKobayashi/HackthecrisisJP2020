@@ -1,44 +1,82 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
+  <div class="wrapper">
+    <div v-if="error.statusCode === 404" class="404">
+      <h1>
+        {{ pageNotFound }}
+      </h1>
+      <p>
+        該当ページが削除されたか、移動した可能性がございます
+      </p>
+    </div>
+    <div v-else class="other">
+      <h1>
+        {{ otherError }}
+      </h1>
+      <p>
+        お手数をお掛けするのですが、しばらくしてからもう一度お試し下さい
+      </p>
+    </div>
     <NuxtLink to="/">
-      Home page
+      <v-btn large depressed rounded color="primary" class="back-btn">
+        トップページに戻る
+      </v-btn>
     </NuxtLink>
-  </v-app>
+  </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { Prop, Component, Vue } from 'vue-property-decorator';
+import { NuxtError } from '@nuxt/types';
+@Component({
   layout: 'empty',
-  props: {
-    error: {
-      type: Object,
-      default: null
-    }
-  },
-  data() {
+  head(this: Error): object {
     return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
-    }
+      title: this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+    };
   },
-  head() {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
-    }
-  }
+  components: {}
+})
+export default class Error extends Vue {
+  @Prop({ type: Object, required: true, default: null })
+  error!: NuxtError;
+
+  pageNotFound: string = 'お探しのページが見つかりません';
+  otherError: string = 'エラーが発生しました';
 }
 </script>
 
 <style scoped>
+.wrapper {
+  max-width: 720px;
+  padding: 0;
+  margin: 0 auto;
+  text-align: center;
+}
 h1 {
-  font-size: 20px;
+  margin-bottom: 20px;
+  font-size: 3.2em;
+  font-weight: 300;
+  color: var(--v-primary-base);
+}
+p {
+  margin: 0;
+}
+.wrapper p {
+  margin-bottom: 20px;
+  font-size: 1.6em;
+  line-height: 1.8;
+  font-weight: 500;
+}
+@media screen and (max-width: 599px) {
+  .wrapper {
+    padding: 0 16px;
+  }
+  h1 {
+    font-size: 2.8em;
+    margin-bottom: 24px;
+  }
+  .wrapper p {
+    font-size: 1.5em;
+  }
 }
 </style>
