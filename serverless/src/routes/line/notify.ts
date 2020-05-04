@@ -12,7 +12,7 @@ const lineNotifyRouter = express.Router();
 const LINE_NOTIFY_BASE_URL = 'https://notify-api.line.me';
 const LINE_NOTIFY_AUTH_BASE_URL = 'https://notify-bot.line.me';
 
-const redirectUri = "http://localhost:3000/local/line/notify/callback";
+const redirectUri = process.env.LINE_NOTIFY_REDIRECT_URL;
 
 lineNotifyRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
   res.send('hello line');
