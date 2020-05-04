@@ -24,3 +24,5 @@ yarn-error.log*
 # Nuxt generate
 # 静的ページの生成結果
 dist
+
+.env
