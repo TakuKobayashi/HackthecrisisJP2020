@@ -16,7 +16,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase": "^7.14.2",
-    "source-map-support": "^0.5.10"
+    "source-map-support": "^0.5.10",
+    "uuid": "^8.0.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",

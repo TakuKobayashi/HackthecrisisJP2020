@@ -4,7 +4,7 @@ import { URLSearchParams } from 'url';
 
 import { setupFireStore } from '../../common/firestore';
 
-const uuid = require('uuid/v4');
+const {"v4": uuid} = require('uuid');
 const querystring = require('querystring');
 const express = require('express');
 const lineNotifyRouter = express.Router();
