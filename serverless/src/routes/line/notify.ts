@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import axios from 'axios';
-import { URLSearchParams } from 'url';
 
+import { sendMessageToAllUsers } from '../../common/lineNotifyMessage';
 import { setupFireStore } from '../../common/firestore';
 
 const { v4: uuid } = require('uuid');
@@ -9,7 +9,6 @@ const querystring = require('querystring');
 const express = require('express');
 const lineNotifyRouter = express.Router();
 
-const LINE_NOTIFY_BASE_URL = 'https://notify-api.line.me';
 const LINE_NOTIFY_AUTH_BASE_URL = 'https://notify-bot.line.me';
 
 const redirectUri = process.env.LINE_NOTIFY_REDIRECT_URL;
@@ -56,22 +55,8 @@ lineNotifyRouter.get('/callback', async (req: Request, res: Response, next: Next
 });
 
 lineNotifyRouter.get('/notify', async (req: Request, res: Response, next: NextFunction) => {
-  const messages = new URLSearchParams();
-  messages.append('message', 'testtest');
-
-  const firestore = setupFireStore();
-  const docsQuery = await firestore.collection('LineNotifyUsers').get();
-  const responses = await Promise.all(
-    docsQuery.docs.map((doc) => {
-      const docData = doc.data();
-      return axios.post(LINE_NOTIFY_BASE_URL + '/api/notify', messages, {
-        headers: {
-          Authorization: 'Bearer ' + docData.access_token,
-        },
-      });
-    }),
-  );
-  res.json(responses.map((response) => response.data));
+  const results = await sendMessageToAllUsers();
+  res.json(results);
 });
 
 export { lineNotifyRouter };
