@@ -18,7 +18,8 @@
     "@nuxt/typescript-runtime": "^0.4.0",
     "@nuxtjs/axios": "^5.3.6",
     "nuxt": "^2.0.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "vue-property-decorator": "^8.4.2"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",
