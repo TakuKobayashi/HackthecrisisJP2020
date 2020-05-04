@@ -39,17 +39,20 @@ lineNotifyRouter.get('/callback', async (req: Request, res: Response, next: Next
     code: req.query.code,
     redirect_uri: redirectUri,
   };
-  const result = await axios.post(LINE_NOTIFY_AUTH_BASE_URL + '/oauth/token?' + querystring.stringify(lineOauthParams)).catch((err) => {
+  const resultResponse = await axios.post(LINE_NOTIFY_AUTH_BASE_URL + '/oauth/token?' + querystring.stringify(lineOauthParams)).catch((err) => {
     console.log(err);
     res.redirect('/');
   });
-  /*
-  const firestore = setupFireStore();
-  await firestore.collection("LineNotifyUsers").doc(result.data.access_token).set({
-    created_at: new Date(),
-  });
-  */
-  res.json(result.data);
+  const result = resultResponse.data;
+  // ユーザーを一意に特定
+  if(result && req.query.state){
+    const firestore = setupFireStore();
+    await firestore.collection("LineNotifyUsers").doc(req.query.state).set({
+      access_token: result.access_token,
+      created_at: new Date(),
+    });
+  }
+  res.json(result);
 });
 
 lineNotifyRouter.get('/notify', async (req: Request, res: Response, next: NextFunction) => {
