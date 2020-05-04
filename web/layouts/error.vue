@@ -16,17 +16,14 @@
         お手数をお掛けするのですが、しばらくしてからもう一度お試し下さい
       </p>
     </div>
-    <NuxtLink to="/">
-      <v-btn large depressed rounded color="primary" class="back-btn">
-        トップページに戻る
-      </v-btn>
-    </NuxtLink>
+    <back-top-page-button />
   </div>
 </template>
 
 <script lang="ts">
 import { Prop, Component, Vue } from 'vue-property-decorator';
 import { NuxtError } from '@nuxt/types';
+import BackTopPageButton from '~/atmos/buttons/backTopPage.vue';
 
 @Component({
   layout: 'empty',
@@ -35,7 +32,9 @@ import { NuxtError } from '@nuxt/types';
       title: this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     };
   },
-  components: {}
+  components: {
+    BackTopPageButton
+  }
 })
 export default class Error extends Vue {
   @Prop({ type: Object, required: true, default: null })
