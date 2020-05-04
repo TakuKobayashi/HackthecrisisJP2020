@@ -63,9 +63,10 @@ lineNotifyRouter.get('/notify', async (req: Request, res: Response, next: NextFu
   const docsQuery = await firestore.collection('LineNotifyUsers').get();
   const responses = await Promise.all(
     docsQuery.docs.map((doc) => {
+      const docData = doc.data();
       return axios.post(LINE_NOTIFY_BASE_URL + '/api/notify', messages, {
         headers: {
-          Authorization: 'Bearer ' + doc.id,
+          Authorization: 'Bearer ' + docData.access_token,
         },
       });
     }),
