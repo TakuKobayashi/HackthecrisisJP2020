@@ -15,7 +15,7 @@
     "test": "jest",
     "build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt-ts build",
     "generate:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt-ts generate",
-    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
+    "deploy": "yarn run generate && gh-pages -d dist"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.4.0",
@@ -37,6 +37,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-nuxt": ">=0.4.2",
     "eslint-plugin-prettier": "^3.1.2",
+    "gh-pages": "^2.2.0",
     "jest": "^24.1.0",
     "prettier": "^1.19.1",
     "ts-jest": "^25.0.0",
