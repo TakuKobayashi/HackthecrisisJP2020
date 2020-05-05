@@ -4,11 +4,13 @@
       <h2>飲食店情報まとめ</h2>
       <v-select :items="items" outlined label="都道府県を選択して下さい" />
       <img src="@/assets/images/icons/line.svg" alt="logo" />
-      <nuxt-link to="/">
+      <a
+        href="https://e9vckioijb.execute-api.ap-northeast-1.amazonaws.com/production/line/notify/auth"
+      >
         <v-btn large depressed rounded color="#00c300" class="back-btn">
           お知らせ登録
         </v-btn>
-      </nuxt-link>
+      </a>
     </div>
   </section>
 </template>

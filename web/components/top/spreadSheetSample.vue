@@ -1,10 +1,12 @@
 <template>
   <section>
-    <nuxt-link to="/">
+    <a
+      href="https://docs.google.com/spreadsheets/d/1g3FVspY09I1qf6xABN8Xoz2JG-8O_zRYjVDq0mEpceM/edit?usp=sharing"
+    >
       <v-btn large depressed rounded color="primary" class="back-btn">
         Google Spreadsheetで表示
       </v-btn>
-    </nuxt-link>
+    </a>
   </section>
 </template>
 <script lang="ts">
