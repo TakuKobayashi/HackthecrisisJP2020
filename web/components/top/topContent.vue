@@ -2,6 +2,13 @@
   <section class="top-content">
     <div class="top-content-inner">
       <h2>飲食店情報まとめ</h2>
+      <v-select :items="items" outlined label="都道府県を選択して下さい" />
+      <img src="@/assets/images/icons/line.svg" alt="logo" />
+      <nuxt-link to="/">
+        <v-btn large depressed rounded color="#00c300" class="back-btn">
+          お知らせ登録
+        </v-btn>
+      </nuxt-link>
     </div>
   </section>
 </template>
@@ -10,7 +17,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class TopContent extends Vue {}
+export default class TopContent extends Vue {
+  items: string[] = ['Foo', 'Bar', 'Fizz', 'Buzz'];
+  model: string = 'Foo';
+}
 </script>
 
 <style scoped>
