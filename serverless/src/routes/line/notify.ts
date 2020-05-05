@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import axios from 'axios';
 
 import { sendMessageToAllUsers } from '../../common/lineNotifyMessage';
-import { setupFireStore } from '../../common/firestore';
+import { setupFireStore } from '../../common/firebase';
 
 const { v4: uuid } = require('uuid');
 const querystring = require('querystring');
