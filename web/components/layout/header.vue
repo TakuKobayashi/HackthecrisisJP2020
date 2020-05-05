@@ -2,11 +2,13 @@
   <header>
     <v-card class="header" color="#DCDCDC" flat tile>
       <nuxt-link to="/" target="_self">
-        <v-card-title class="logo hidden-xs-only">
-          <img src="" alt="title" height="" />
+        <v-card-title class="title hidden-xs-only">
+          <img src="@/assets/images/icons/shakehands.svg" alt="logo" />
+          <h2>飲食店支援情報まとめ</h2>
         </v-card-title>
-        <v-card-title class="logo-left hidden-sm-and-up">
-          <img src="" alt="title" height="" />
+        <v-card-title class="title-left hidden-sm-and-up">
+          <img src="@/assets/images/icons/shakehands.svg" alt="logo" />
+          <h3>飲食店支援情報まとめ</h3>
         </v-card-title>
       </nuxt-link>
     </v-card>
@@ -26,10 +28,10 @@ header {
   z-index: 999;
   font-size: 62.5%;
 }
-.logo {
+.title {
   justify-content: center;
 }
-.logo-left {
+.title-left {
   justify-content: left;
 }
 </style>
