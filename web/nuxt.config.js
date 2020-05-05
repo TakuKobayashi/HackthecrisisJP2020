@@ -82,7 +82,8 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend() {}
+    extend() {},
+    publicPath: '/HackthecrisisJP2020/_nuxt/'
   },
   ...routerBase
 };
