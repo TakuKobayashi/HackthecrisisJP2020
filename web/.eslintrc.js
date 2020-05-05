@@ -16,5 +16,8 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    "semi": ["error", "always"],
+    "semi-spacing": ["error", {"after": true, "before": false}],
+    "semi-style": ["error", "last"]
   }
-}
+};
