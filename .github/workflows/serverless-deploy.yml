@@ -24,17 +24,19 @@ jobs:
       env:
         LINE_NOTIFY_CLIENT_ID: ${{ secrets.LINE_NOTIFY_CLIENT_ID }}
         LINE_NOTIFY_CLIENT_SECRET: ${{ secrets.LINE_NOTIFY_CLIENT_SECRET }}
-        FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-        FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
-        FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+        FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
         LINE_NOTIFY_REDIRECT_URL: ${{ secrets.LINE_NOTIFY_REDIRECT_URL }}
       run: |
         echo "LINE_NOTIFY_CLIENT_ID=${LINE_NOTIFY_CLIENT_ID}" >> ./.env
         echo "LINE_NOTIFY_CLIENT_SECRET=${LINE_NOTIFY_CLIENT_SECRET}" >> ./.env
-        echo "FIREBASE_API_KEY=${FIREBASE_API_KEY}" >> ./.env
-        echo "FIREBASE_AUTH_DOMAIN=${FIREBASE_AUTH_DOMAIN}" >> ./.env
-        echo "FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}" >> ./.env
+        echo "FIREBASE_STORAGE_BUCKET=${FIREBASE_STORAGE_BUCKET}" >> ./.env
         echo "LINE_NOTIFY_REDIRECT_URL=${LINE_NOTIFY_REDIRECT_URL}" >> ./.env
+    - name: Register firebaseConfig.json
+      working-directory: ./serverless
+      env:
+        FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+      run: |
+        echo "${FIREBASE_CONFIG}" >> ./firebaseConfig.json
     - name: yarn install
       working-directory: ./serverless
       run: yarn install

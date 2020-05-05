@@ -1,21 +1,22 @@
-import * as firebase from 'firebase';
+import * as admin from 'firebase-admin';
+
+const serviceAccount = require('../../firebaseConfig.json');
 
 export function setupFireStore() {
   initFirebase();
-  return firebase.firestore();
+  return admin.firestore();
 }
 
 export function setupFireStorage() {
   initFirebase();
-  return firebase.storage();
+  return admin.storage();
 }
 
 function initFirebase(){
-  if (firebase.apps.length <= 0) {
-    firebase.initializeApp({
-      apiKey: process.env.FIREBASE_API_KEY!,
-      authDomain: process.env.FIREBASE_AUTH_DOMAIN!,
-      projectId: process.env.FIREBASE_PROJECT_ID!,
+  if (admin.apps.length <= 0) {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET!,
     });
   }
 }

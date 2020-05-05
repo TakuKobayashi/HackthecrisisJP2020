@@ -17,9 +17,7 @@ custom:
     include:
       - LINE_NOTIFY_CLIENT_ID
       - LINE_NOTIFY_CLIENT_SECRET
-      - FIREBASE_API_KEY
-      - FIREBASE_AUTH_DOMAIN
-      - FIREBASE_PROJECT_ID
+      - FIREBASE_STORAGE_BUCKET
       - LINE_NOTIFY_REDIRECT_URL
 
 # Add the serverless-webpack plugin
