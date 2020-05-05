@@ -1,6 +1,6 @@
 import { URLSearchParams } from 'url';
 import axios from 'axios';
-import { setupFireStore } from './firestore';
+import { setupFireStore } from './firebase';
 
 const LINE_NOTIFY_BASE_URL = 'https://notify-api.line.me';
 
