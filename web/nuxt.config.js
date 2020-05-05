@@ -1,12 +1,5 @@
 import colors from 'vuetify/es5/util/colors';
 
-const routerBase =
-  process.env.DEPLOY_ENV === 'GH_PAGES'
-    ? {
-        router: { base: '/HackthecrisisJP2020/' }
-      }
-    : {};
-
 export default {
   mode: 'universal',
   /*
@@ -84,5 +77,5 @@ export default {
      */
     extend() {}
   },
-  ...routerBase
+  router: { base: '/HackthecrisisJP2020/' }
 };
