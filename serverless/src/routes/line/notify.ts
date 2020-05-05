@@ -51,7 +51,7 @@ lineNotifyRouter.get('/callback', async (req: Request, res: Response, next: Next
       created_at: new Date(),
     });
   }
-  res.json(result);
+  res.redirect("https://takukobayashi.github.io/HackthecrisisJP2020/");
 });
 
 lineNotifyRouter.get('/notify', async (req: Request, res: Response, next: NextFunction) => {

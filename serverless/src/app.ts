@@ -4,8 +4,6 @@ import { APIGatewayEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
 import * as awsServerlessExpress from 'aws-serverless-express';
 import * as express from 'express';
 
-import { setupFireStorage } from './common/firebase';
-
 import { lineNotifyRouter } from './routes/line/notify';
 
 const app = express();
@@ -20,11 +18,6 @@ app.use(cors({ origin: true }));
 app.use('/line/notify', lineNotifyRouter);
 
 app.get('/', (req, res) => {
-  const bucket = setupFireStorage().bucket();
-  const file = bucket.file('data/sample.json');
-  file.save(JSON.stringify({})).then(result => {
-    console.log(result);
-  });
   res.json({ hello: 'world' });
 });
 
