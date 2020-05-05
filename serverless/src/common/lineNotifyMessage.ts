@@ -24,9 +24,9 @@ export async function sendMessageToAllUsers(): Promise<any[]> {
   return responses.map((response) => response.data);
 }
 
-export function parseCSV(): any[] {
+export function parseCSV(): { [s: string]: any }[] {
   const data = fs.readFileSync("hackcrisis-jp-data.csv").toString()
-  const results = [];
+  const results: { [s: string]: any }[] = [];
   const rows = data.split("\r\n");
   const columnNames = rows[0].split(",");
   for(let i = 1;i < rows.length;++i){
@@ -41,13 +41,23 @@ export function parseCSV(): any[] {
 }
 
 export async function generateMessageBody(): Promise<string> {
-  const result = await uploadToNewJSON();
-  return 'testtest';
+  const jsonObjects = parseCSV();
+  const result = await uploadToNewJSON(jsonObjects);
+  const messageBodies = ["新しく給付金情報が追加されました!!"];
+  for(const jsonObject of jsonObjects){
+    const messageBodyArr = []
+    const keys = Object.keys(jsonObject);
+    for(const key of keys){
+      messageBodyArr.push(jsonObject[key])
+    }
+    messageBodies.push(messageBodyArr.join(" "))
+  }
+  return messageBodies.join("\r\n");
 }
 
-export async function uploadToNewJSON() {
+export async function uploadToNewJSON(jsonObjects: { [s: string]: any }[]) {
   const bucket = setupFireStorage().bucket();
   const file = bucket.file('data/convertCSV.json');
-  const result = await file.save(JSON.stringify(parseCSV()));
+  const result = await file.save(JSON.stringify(jsonObjects));
   return result;
 }
